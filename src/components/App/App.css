@@ -1,0 +1,4 @@
+.page {
+  max-width: calc(100% - 2 * 101px);
+  margin: auto;
+}
