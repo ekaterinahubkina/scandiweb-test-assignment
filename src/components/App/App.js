@@ -1,9 +1,12 @@
+import "./App.css";
 import React, { Component } from "react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { getProducts } from "../../utils/GraphqlApi";
 import { Route, Routes } from "react-router-dom";
 import ProductListingPage from "../ProductListingPage/ProductListingPage";
 import Header from "../Header/Header";
+import All from "../All/All";
+import CartOverlay from "../Header/CartOverlay/CartOverlay";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
@@ -13,40 +16,45 @@ const client = new ApolloClient({
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { date: new Date(), products: [], categories: [] };
+    this.state = { products: [], categories: [], currencies: [], };
   }
 
   componentDidMount() {
-    this.timerID = setInterval(() => this.tick(), 1000);
     client
       .query({ query: getProducts })
       .then((data) => {
-        console.log(data)
+        console.log(data);
         this.setState(() => {
-          return { products: data, categories: data.data.categories };
+          return {
+            products: data,
+            categories: data.data.categories,
+            currencies: data.data.currencies,
+          };
         });
       })
       .catch((err) => console.log(err));
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
-
-  tick() {
-    this.setState({
-      date: new Date(),
-    });
   }
 
   render() {
     return (
       <ApolloProvider client={client}>
         <div className="page">
-          <Header categories={this.state.categories} />
-          <Routes>
-            <Route path="/" element={<ProductListingPage />}></Route>
-          </Routes>
+          {this.state.currencies.length > 0 && (
+            <>
+              <Header
+                categories={this.state.categories}
+                currencies={this.state.currencies}
+                onCartClick ={this.handleCartBtnClick}
+              />
+              
+              <Routes>
+                <Route path="/" element={<ProductListingPage />}></Route>
+                <Route path="/all" element={<All />}></Route>
+                <Route path="/tech" element={<div>TECH</div>}></Route>
+                <Route path="/clothes" element={<div>CLOTHES</div>}></Route>
+              </Routes>
+            </>
+          )}
         </div>
       </ApolloProvider>
     );

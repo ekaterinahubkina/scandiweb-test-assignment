@@ -1,0 +1,25 @@
+@import '../../../index.scss';
+
+.cart__overlay {
+    position: absolute;
+    top: 80px;
+    right: -15px;
+    background-color: #39374838;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cart__title {
+    margin: 32px 16px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 160%;
+    color: $text-color;
+}
+
+.cart {
+    background-color: $background-white;
+    min-width: 325px;
+    margin-right: 72px;
+}

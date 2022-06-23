@@ -11,3 +11,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+$background-white: #fff;
+$text-color: #1D1F22;
+
+@mixin font-style-normal {
+  font-style: normal;
+  font-size: 16px;
+  line-height: 160%;
+  margin: 0;
+  padding: 0;
+}
+
+@mixin font-size-small {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+
+}

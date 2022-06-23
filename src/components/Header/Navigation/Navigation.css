@@ -1,0 +1,27 @@
+.navigation {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navigation__link {
+    text-decoration: none;
+    color: #000;
+    padding: 0 16px 30px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 120%;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: all .5s ease-in;
+}
+
+.navigation__link:hover {
+    opacity: .8;
+}
+
+.navigation__link_active {
+    color: #5ECE7B;
+    border-bottom: 2px solid #5ECE7B;
+}
