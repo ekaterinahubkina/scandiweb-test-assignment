@@ -2,11 +2,11 @@ import { Component } from "react";
 import ProductCard from "../ProductListingPage/ProductCard/ProductCard";
 import ProductListingPage from "../ProductListingPage/ProductListingPage";
 
-class All extends Component {
+class Tech extends Component {
     render () {
         return (
             
-            <ProductListingPage categoryName="All">
+            <ProductListingPage categoryName="Tech">
                 <ProductCard />
                 <ProductCard />
                 <ProductCard />
@@ -18,4 +18,4 @@ class All extends Component {
     }
 }
 
-export default All;
+export default Tech;

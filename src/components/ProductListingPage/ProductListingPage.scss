@@ -1,0 +1,23 @@
+@import '../../index.scss';
+
+.products {
+    @include section-width;
+}
+
+.products__category-name {
+    font-weight: 400;
+    font-size: 42px;
+    line-height: 160%;
+}
+
+.products__list {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(386px, 1fr));
+    row-gap: 103px;
+    column-gap: 40px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+}

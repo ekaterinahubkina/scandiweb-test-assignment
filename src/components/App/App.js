@@ -2,11 +2,12 @@ import "./App.css";
 import React, { Component } from "react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { getProducts } from "../../utils/GraphqlApi";
-import { Route, Routes } from "react-router-dom";
-import ProductListingPage from "../ProductListingPage/ProductListingPage";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Header from "../Header/Header";
 import All from "../All/All";
-import CartOverlay from "../Header/CartOverlay/CartOverlay";
+// import CartOverlay from "../Header/CartOverlay/CartOverlay";
+import Clothes from "../Clothes/Clothes";
+import Tech from "../Tech/Tech";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
@@ -44,14 +45,13 @@ class App extends Component {
               <Header
                 categories={this.state.categories}
                 currencies={this.state.currencies}
-                onCartClick ={this.handleCartBtnClick}
               />
               
               <Routes>
-                <Route path="/" element={<ProductListingPage />}></Route>
-                <Route path="/all" element={<All />}></Route>
-                <Route path="/tech" element={<div>TECH</div>}></Route>
-                <Route path="/clothes" element={<div>CLOTHES</div>}></Route>
+                <Route path="/" element={<Navigate to='/all' replace={true} />}></Route>
+                <Route path="/all" index element={<All />}></Route>
+                <Route path="/tech" element={<Tech />}></Route>
+                <Route path="/clothes" element={<Clothes />}></Route>
               </Routes>
             </>
           )}

@@ -21,9 +21,9 @@ class CartItem extends Component {
           <>
             <span>Color:</span>
             <div className="cart-item__available-colors">
-              <div className="cart-item__color"></div>
-              <div className="cart-item__color"></div>
-              <div className="cart-item__color"></div>
+              <div className="cart-item__color" style={{backgroundColor: "blue"}}></div>
+              <div className="cart-item__color" style={{backgroundColor: "green"}}></div>
+              <div className="cart-item__color" style={{backgroundColor: "yellow"}}></div>
             </div>
           </>
         </div>

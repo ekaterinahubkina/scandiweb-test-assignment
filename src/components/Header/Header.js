@@ -1,5 +1,5 @@
 import { Component } from "react";
-import "./Header.css";
+import "./Header.scss";
 import Navigation from "./Navigation/Navigation";
 import logo from "../../images/logo.svg";
 import { NavLink } from "react-router-dom";
