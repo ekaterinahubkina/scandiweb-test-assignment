@@ -35,9 +35,9 @@
 
 .product-card__image {
     width: 100%;
-    min-height: 330px;
+    height: 330px;
     margin-bottom: 24px;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .product-card__title {

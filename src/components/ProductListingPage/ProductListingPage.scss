@@ -2,12 +2,14 @@
 
 .products {
     @include section-width;
+    margin-bottom: 191px;
 }
 
 .products__category-name {
     font-weight: 400;
     font-size: 42px;
     line-height: 160%;
+    text-transform: capitalize;
 }
 
 .products__list {
@@ -19,5 +21,10 @@
     list-style: none;
     margin: 0;
     padding: 0;
+
+    & a {
+        text-decoration: none;
+        color: inherit;
+    }
 
 }

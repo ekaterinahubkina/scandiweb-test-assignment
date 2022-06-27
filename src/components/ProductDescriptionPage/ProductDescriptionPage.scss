@@ -1,0 +1,7 @@
+@import '../../index.scss';
+
+.product-description {
+    @include section-width;
+    background-color: aqua;
+    height: 200px;
+}

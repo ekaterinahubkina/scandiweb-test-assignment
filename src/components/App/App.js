@@ -4,10 +4,9 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { getProducts } from "../../utils/GraphqlApi";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Header from "../Header/Header";
-import All from "../All/All";
 // import CartOverlay from "../Header/CartOverlay/CartOverlay";
-import Clothes from "../Clothes/Clothes";
-import Tech from "../Tech/Tech";
+import ProductListingPage from "../ProductListingPage/ProductListingPage";
+import ProductDescriptionPage from "../ProductDescriptionPage/ProductDescriptionPage";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
@@ -17,7 +16,7 @@ const client = new ApolloClient({
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { products: [], categories: [], currencies: [], };
+    this.state = { categories: [], currencies: [], selectedCurrency: "$" };
   }
 
   componentDidMount() {
@@ -27,7 +26,6 @@ class App extends Component {
         console.log(data);
         this.setState(() => {
           return {
-            products: data,
             categories: data.data.categories,
             currencies: data.data.currencies,
           };
@@ -35,6 +33,10 @@ class App extends Component {
       })
       .catch((err) => console.log(err));
   }
+
+  selectCurrency = (currency) => {
+    this.setState({ selectedCurrency: currency });
+  };
 
   render() {
     return (
@@ -45,13 +47,48 @@ class App extends Component {
               <Header
                 categories={this.state.categories}
                 currencies={this.state.currencies}
+                selectCurrency={this.selectCurrency}
               />
-              
+
               <Routes>
-                <Route path="/" element={<Navigate to='/all' replace={true} />}></Route>
-                <Route path="/all" index element={<All />}></Route>
-                <Route path="/tech" element={<Tech />}></Route>
-                <Route path="/clothes" element={<Clothes />}></Route>
+                <Route
+                  path="/"
+                  element={<Navigate to="/all" replace={true} />}
+                ></Route>
+                <Route
+                  path="/all"
+                  element={
+                    <ProductListingPage
+                      category={this.state.categories.find(
+                        (item) => item.name === "all"
+                      )}
+                      currency={this.state.selectedCurrency}
+                    />
+                  }
+                ></Route>
+                <Route
+                  path="/tech"
+                  element={
+                    <ProductListingPage
+                      category={this.state.categories.find(
+                        (item) => item.name === "tech"
+                      )}
+                      currency={this.state.selectedCurrency}
+                    />
+                  }
+                ></Route>
+                <Route
+                  path="/clothes"
+                  element={
+                    <ProductListingPage
+                      category={this.state.categories.find(
+                        (item) => item.name === "clothes"
+                      )}
+                      currency={this.state.selectedCurrency}
+                    />
+                  }
+                ></Route>
+                <Route path="/:productId" element={<ProductDescriptionPage />} />
               </Routes>
             </>
           )}

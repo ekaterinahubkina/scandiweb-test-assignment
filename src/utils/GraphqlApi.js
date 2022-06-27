@@ -9,7 +9,15 @@ export const getProducts = gql`
     categories {
       name
       products {
+        id
         name
+        gallery
+        prices {
+          currency {
+            symbol
+          }
+          amount
+        }
       }
     }
   }

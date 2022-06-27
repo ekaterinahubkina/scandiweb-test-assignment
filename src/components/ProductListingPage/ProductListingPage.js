@@ -1,5 +1,7 @@
 import { Component } from "react";
-import './ProductListingPage.scss';
+import { Link } from "react-router-dom";
+import ProductCard from "./ProductCard/ProductCard";
+import "./ProductListingPage.scss";
 
 class ProductListingPage extends Component {
   // constructor(props) {
@@ -9,15 +11,16 @@ class ProductListingPage extends Component {
   render() {
     return (
       <section className="products">
-        <h2 className="products__category-name">{this.props.categoryName}</h2>
+        <h2 className="products__category-name">{this.props.category.name}</h2>
         <ul className="products__list">
-          {this.props.children}
-          {/* <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard /> */}
+          {/* {this.props.children} */}
+          {this.props.category.products.map((item) => (
+            <ProductCard
+              product={item}
+              key={item.id}
+              currency={this.props.currency}
+            />
+          ))}
         </ul>
       </section>
     );

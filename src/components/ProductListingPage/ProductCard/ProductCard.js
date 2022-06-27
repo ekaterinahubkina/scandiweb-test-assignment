@@ -1,25 +1,39 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
 import "./ProductCard.scss";
 
 class ProductCard extends Component {
   // constructor(props) {
   //   super(props);
+  //   this.price = this.chooseCurrency();
+  //   this.state = {currency: this.props.product.prices.find((item) => item.currency.symbol === this.props.currency)};
+  //   //debugger;
   // }
+  chooseCurrency = () => {
+    return this.props.product.prices.find(
+      (item) => item.currency.symbol === this.props.currency
+    );
+  };
 
   render() {
     return (
-      <article className="product-card">
-        <div className="product-card__image-container">
-          <img
-            className="product-card__image"
-            src="https://images.unsplash.com/photo-1655829312782-73af2a235638?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDN8UzRNS0xBc0JCNzR8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"
-            alt="product"
-          ></img>
-        </div>
+      <Link to={`/${this.props.product.id}`}>
+        <article className="product-card">
+          <div className="product-card__image-container">
+            <img
+              className="product-card__image"
+              src={this.props.product.gallery[0]}
+              alt={this.props.product.name}
+            ></img>
+          </div>
 
-        <h4 className="product-card__title">Some product</h4>
-        <p className="product-card__price">40$</p>
-      </article>
+          <h4 className="product-card__title">{this.props.product.name}</h4>
+          <p className="product-card__price">
+            {this.chooseCurrency().currency.symbol}
+            {this.chooseCurrency().amount}
+          </p>
+        </article>
+      </Link>
     );
   }
 }

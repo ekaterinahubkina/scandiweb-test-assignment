@@ -33,7 +33,7 @@ class Header extends Component {
               {this.props.currencies[0].symbol}
             </div> */}
             {/* <button className="header__currencies-btn" onClick={this.handleCurrenciesBtnClick}></button> */}
-            <CurrenciesDropdown currencies={this.props.currencies} />
+            <CurrenciesDropdown currencies={this.props.currencies} selectCurrency={this.props.selectCurrency} />
             <div className="header__cart" onClick={this.handleCartBtnClick}></div>
             
           </div>
