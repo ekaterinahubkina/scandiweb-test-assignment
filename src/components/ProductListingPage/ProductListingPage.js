@@ -19,6 +19,7 @@ class ProductListingPage extends Component {
               product={item}
               key={item.id}
               currency={this.props.currency}
+              onCardClick={this.props.onCardClick}
             />
           ))}
         </ul>

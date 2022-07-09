@@ -18,7 +18,7 @@ class CurrenciesDropdown extends Component {
       // <form className="dropwown" onSubmit={this.handleSubmit}>
       <select className="select" onChange={this.handleChange}>
         {this.props.currencies.map((item) => (
-          <option value={item.symbol}>{item.symbol}</option>
+          <option value={item.symbol} key={item.label}>{item.symbol}</option>
         ))}
         {/* <option value="grapefruit">Грейпфрут</option>
             <option value="lime">Лайм</option>

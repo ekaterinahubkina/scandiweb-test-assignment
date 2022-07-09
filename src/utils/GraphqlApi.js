@@ -10,6 +10,7 @@ export const getProducts = gql`
       name
       products {
         id
+        brand
         name
         gallery
         prices {
@@ -21,4 +22,22 @@ export const getProducts = gql`
       }
     }
   }
+`;
+
+export const getProduct = gql`
+query Query($id: String!) {
+  product(id: $id) {
+name
+brand
+gallery
+attributes {
+  name
+  type
+  items {
+    id
+    displayValue
+  }
+}
+  }
+}
 `;

@@ -1,10 +1,132 @@
 import { Component } from "react";
+import { client } from "../App/App";
 import "./ProductDescriptionPage.scss";
+import { getProduct } from "../../utils/GraphqlApi";
+import { useParams } from "react-router-dom";
+// import {useLocation} from 'react-router-dom';
+
+function withRouter(Component) {
+  function ComponentWithRouter(props) {
+    let params = useParams();
+    return <Component {...props} params={params} />;
+  }
+  return ComponentWithRouter;
+}
 
 class ProductDescriptionPage extends Component {
+  constructor(props) {
+    // debugger;
+    super(props);
+    // this.location = this.props.location;
+
+    this.state = {
+      selectedImg: "",
+      product: {},
+      id: this.props.params.productId,
+      isLoading: true,
+    };
+    this.selectImg = this.selectImg.bind(this);
+  }
+  componentDidMount() {
+    // this.setState({
+    //   id : this.props.params.productId
+    // })
+    client
+      .query({ query: getProduct, variables: { id: this.state.id } })
+      .then((data) => {
+        console.log(data);
+        this.setState(() => {
+          return {
+            isLoading: false,
+            product: data.data.product,
+            selectedImg: data.data.product.gallery[0],
+          };
+        });
+      })
+      .catch((err) => console.log(err));
+  }
+
+  selectImg(e) {
+    this.setState({ selectedImg: e.target.src });
+  }
   render() {
-    return <section className="product-description"></section>;
+    return !this.state.isLoading ? (
+      <section className="product-description">
+        <div className="product-description__gallery">
+          {this.state.product.gallery.map((link, i) => (
+            <img
+              key={i}
+              className="product-description__gallery-img"
+              src={link}
+              alt="product"
+              onClick={this.selectImg}
+            ></img>
+          ))}
+        </div>
+        {/* <div className="product-description__container"> */}
+        <img
+          className="product-description__selected-img"
+          src={this.state.selectedImg}
+          alt="selected-img"
+        ></img>
+        <div className="product-description__container">
+          <h2 className="product-description__brand">
+            {this.state.product.brand}
+          </h2>
+          <h3 className="product-description__name">
+            {this.state.product.name}
+          </h3>
+          {this.state.product.attributes.some((el) => el.name === "Size") && (
+            <div className="product-description__sizes">
+              <p>Size:</p>
+              <div>
+                {this.state.product.attributes
+                  .find((el) => el.name === "Size")
+                  .items.map((item) => (
+                    <div key={item.id} className="product-description__size">
+                      {(() => {
+                        switch (item.displayValue) {
+                          case "Small":
+                            return "S";
+                          case "Medium":
+                            return "M";
+                          case "Large":
+                            return "L";
+                          case "Extra Large":
+                            return "XL";
+                          default:
+                            return "xs";
+                        }
+                      })()}
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+
+          <div className="product-description__colors">
+            Color:
+            <div className="product-description__color"></div>
+            <div className="product-description__color"></div>
+            <div className="product-description__color"></div>
+          </div>
+          <div className="product-description__price">
+            Price:
+            <span>$50</span>
+          </div>
+          <button className="product-description__add-to-cart-btn">
+            add to cart
+          </button>
+          <div className="product-description__description"></div>
+        </div>
+
+        {/* </div> */}
+      </section>
+    ) : (
+      <p>ISLOADING</p>
+    );
   }
 }
 
-export default ProductDescriptionPage;
+const HOCProductDescriptionPage = withRouter(ProductDescriptionPage);
+export default HOCProductDescriptionPage;

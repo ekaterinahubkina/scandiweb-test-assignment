@@ -1,14 +1,15 @@
 import "./App.css";
 import React, { Component } from "react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { getProducts } from "../../utils/GraphqlApi";
+import { getProduct, getProducts } from "../../utils/GraphqlApi";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Header from "../Header/Header";
 // import CartOverlay from "../Header/CartOverlay/CartOverlay";
 import ProductListingPage from "../ProductListingPage/ProductListingPage";
 import ProductDescriptionPage from "../ProductDescriptionPage/ProductDescriptionPage";
+import HOCProductDescriptionPage from "../ProductDescriptionPage/ProductDescriptionPage";
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
   cache: new InMemoryCache(),
 });
@@ -16,7 +17,12 @@ const client = new ApolloClient({
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { categories: [], currencies: [], selectedCurrency: "$" };
+    this.state = {
+      categories: [],
+      currencies: [],
+      selectedCurrency: "$",
+      selectedProduct: {},
+    };
   }
 
   componentDidMount() {
@@ -36,6 +42,21 @@ class App extends Component {
 
   selectCurrency = (currency) => {
     this.setState({ selectedCurrency: currency });
+  };
+
+  getProduct = (id) => {
+    client
+      .query({ query: getProduct(id) })
+      .then((data) => {
+        console.log("got product by id");
+
+        console.log(data);
+        this.setState({ selectedProduct: data });
+      })
+      .catch((err) => console.log(err));
+  };
+  handleProductCardClick = (card) => {
+    this.setState({ selectedProduct: { ...card } });
   };
 
   render() {
@@ -63,6 +84,7 @@ class App extends Component {
                         (item) => item.name === "all"
                       )}
                       currency={this.state.selectedCurrency}
+                      onCardClick={this.handleProductCardClick}
                     />
                   }
                 ></Route>
@@ -74,6 +96,7 @@ class App extends Component {
                         (item) => item.name === "tech"
                       )}
                       currency={this.state.selectedCurrency}
+                      onCardClick={this.handleProductCardClick}
                     />
                   }
                 ></Route>
@@ -85,10 +108,18 @@ class App extends Component {
                         (item) => item.name === "clothes"
                       )}
                       currency={this.state.selectedCurrency}
+                      onCardClick={this.handleProductCardClick}
                     />
                   }
                 ></Route>
-                <Route path="/:productId" element={<ProductDescriptionPage />} />
+                <Route
+                  path="/:productId"
+                  element={
+                    <HOCProductDescriptionPage
+                      product={this.state.selectedProduct}
+                    />
+                  }
+                />
               </Routes>
             </>
           )}

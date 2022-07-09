@@ -15,9 +15,16 @@ class ProductCard extends Component {
     );
   };
 
+  handleCardClick = () => {
+
+    this.props.onCardClick(this.props.product);
+    // debugger;
+    console.log(this.props.product.id)
+  }
+
   render() {
     return (
-      <Link to={`/${this.props.product.id}`}>
+      <Link to={`/${this.props.product.id}`} onClick={this.handleCardClick}>
         <article className="product-card">
           <div className="product-card__image-container">
             <img
