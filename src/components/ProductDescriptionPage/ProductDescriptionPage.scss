@@ -38,22 +38,23 @@
     grid-area: name;
     margin: 0;
 }
-.product-description__sizes {
-    grid-area: size;
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    & div {
-        display: flex;
-        gap: 12px;
-    }
-    & .product-description__size {
-        width: 63px;
-        height: 45px;
-        border: 1px solid #1D1F22;
-        align-items: center;
-        justify-content: center;
-    }
-}
+// .product-description__sizes {
+//     grid-area: size;
+//     display: flex;
+//     flex-direction: column;
+//     & div {
+//         display: flex;
+//         gap: 12px;
+//     }
+//     & .product-description__size {
+//         width: 63px;
+//         height: 45px;
+//         border: 1px solid #1D1F22;
+//         align-items: center;
+//         justify-content: center;
+//         text-align: center;
+//     }
+// }
 
 .product-description__colors {
     grid-area: color;

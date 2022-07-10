@@ -3,6 +3,7 @@ import { client } from "../App/App";
 import "./ProductDescriptionPage.scss";
 import { getProduct } from "../../utils/GraphqlApi";
 import { useParams } from "react-router-dom";
+import Attributes from "./Attributes/Attributes";
 // import {useLocation} from 'react-router-dom';
 
 function withRouter(Component) {
@@ -76,33 +77,7 @@ class ProductDescriptionPage extends Component {
           <h3 className="product-description__name">
             {this.state.product.name}
           </h3>
-          {this.state.product.attributes.some((el) => el.name === "Size") && (
-            <div className="product-description__sizes">
-              <p>Size:</p>
-              <div>
-                {this.state.product.attributes
-                  .find((el) => el.name === "Size")
-                  .items.map((item) => (
-                    <div key={item.id} className="product-description__size">
-                      {(() => {
-                        switch (item.displayValue) {
-                          case "Small":
-                            return "S";
-                          case "Medium":
-                            return "M";
-                          case "Large":
-                            return "L";
-                          case "Extra Large":
-                            return "XL";
-                          default:
-                            return "xs";
-                        }
-                      })()}
-                    </div>
-                  ))}
-              </div>
-            </div>
-          )}
+          <Attributes attributes={this.state.product.attributes}/>
 
           <div className="product-description__colors">
             Color:

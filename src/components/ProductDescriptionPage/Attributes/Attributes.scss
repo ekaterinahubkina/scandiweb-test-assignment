@@ -1,0 +1,19 @@
+.attributes {
+    display: flex;
+    flex-direction: column;
+
+    & .attributes__container {
+        display: flex;
+        gap: 12px;
+    }
+
+    & .attributes__value {
+        width: 63px;
+        height: 45px;
+        border: 1px solid #1D1F22;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+}
