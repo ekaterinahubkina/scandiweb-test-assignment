@@ -77,14 +77,7 @@ class ProductDescriptionPage extends Component {
           <h3 className="product-description__name">
             {this.state.product.name}
           </h3>
-          <Attributes attributes={this.state.product.attributes}/>
-
-          <div className="product-description__colors">
-            Color:
-            <div className="product-description__color"></div>
-            <div className="product-description__color"></div>
-            <div className="product-description__color"></div>
-          </div>
+          <Attributes attributes={this.state.product.attributes} />
           <div className="product-description__price">
             Price:
             <span>$50</span>
