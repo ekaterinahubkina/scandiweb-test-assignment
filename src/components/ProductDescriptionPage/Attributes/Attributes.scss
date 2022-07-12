@@ -10,6 +10,7 @@
     font-size: 18px;
     line-height: 18px;
     color: $text-color;
+    margin: 0 0 8px;
 }
 
 .attributes__container {
@@ -25,27 +26,35 @@
     transition: all .5s ease-in;
     cursor: pointer;
 
-    &:hover {
-        background-color: rgba($color: #000000, $alpha: .2);
+    &:not(.attributes__value_type_text_active, .attributes__value_type_swatch_active):hover {
+        background-color: rgba($color: #000000, $alpha: .1)!important;
+    }
+
+    & input[type='radio'] {
+        display: none;
     }
 }
 
 .attributes__value_type_text {
     width: 63px;
     height: 45px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 18px;
     border: 1px solid #1D1F22;
+    margin: 0 0 24px;
 }
 
 .attributes__value_type_swatch {
     width: 32px;
     height: 32px;
     padding: 1px;
+    margin: 0 0 36px;
     background-clip: content-box;
+
 }
 
-input[type='radio'] {
-    display: none;
-}
+
 
 .attributes__value_type_text_active {
     background-color: #1D1F22;

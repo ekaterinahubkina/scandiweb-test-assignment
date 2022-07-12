@@ -47,6 +47,12 @@ class ProductDescriptionPage extends Component {
       .catch((err) => console.log(err));
   }
 
+  chooseCurrency = () => {
+    return this.state.product.prices.find(
+      (item) => item.currency.symbol === this.props.currency
+    );
+  };
+
   selectImg(e) {
     this.setState({ selectedImg: e.target.src });
   }
@@ -64,7 +70,6 @@ class ProductDescriptionPage extends Component {
             ></img>
           ))}
         </div>
-        {/* <div className="product-description__container"> */}
         <img
           className="product-description__selected-img"
           src={this.state.selectedImg}
@@ -77,18 +82,25 @@ class ProductDescriptionPage extends Component {
           <h3 className="product-description__name">
             {this.state.product.name}
           </h3>
-          <Attributes attributes={this.state.product.attributes} />
+          <div className="attributes">
+            {this.state.product.attributes.map((attribute) => (
+              <Attributes key={attribute.name} attribute={attribute}/>
+            ))}
+          </div>
+          {/* <Attributes attributes={this.state.product.attributes} /> */}
           <div className="product-description__price">
             Price:
-            <span>$50</span>
+            <div>
+              {this.chooseCurrency().currency.symbol}
+              {this.chooseCurrency().amount}
+            </div>
           </div>
           <button className="product-description__add-to-cart-btn">
             add to cart
           </button>
-          <div className="product-description__description"></div>
+          
+          <div className="product-description__description" dangerouslySetInnerHTML={{ __html: this.state.product.description }}></div>
         </div>
-
-        {/* </div> */}
       </section>
     ) : (
       <p>ISLOADING</p>

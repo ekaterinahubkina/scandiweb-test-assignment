@@ -2,9 +2,10 @@
 
 .product-description {
     @include section-width;
+    padding-top: 80px;
     display: grid;
-    grid-template-areas: 
-    "gallery img description";
+    grid-template-areas:
+        "gallery img description";
 
 }
 
@@ -30,23 +31,53 @@
 }
 
 .product-description__brand {
-    grid-area: brand;
-    margin: 0;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 27px;
+    margin: 0 0 16px;
 }
 
 .product-description__name {
-    grid-area: name;
-    margin: 0;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 27px;
+    margin: 0 0 43px;
 }
 
 .product-description__price {
-    grid-area: price;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 18px;
+    margin: 0 0 10px;
+
+    & div {
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 18px;
+        margin: 10px 0 20px;
+    }
 }
 
 .product-description__add-to-cart-btn {
-    grid-area: btn;
+    width: 292px;
+    height: 52px;
+    margin: 0 0 40px;
+    border: none;
+    text-transform: uppercase;
+    background-color: #5ECE7B;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 120%;
+    color: #fff;
 }
 
 .product-description__description {
     grid-area: info;
+
+    & * {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 159.96%;
+        color: $text-color;
+    }
 }

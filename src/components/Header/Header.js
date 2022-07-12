@@ -12,9 +12,7 @@ class Header extends Component {
       this.state = { isActive: false, isCartOpen: false };
     }
 
-  handleCurrenciesBtnClick = () => {
-    this.setState({ isActive: !this.state.isActive });
-  }
+  
 
   handleCartBtnClick = () => {
     this.setState({ isCartOpen: !this.state.isCartOpen });

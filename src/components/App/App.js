@@ -6,7 +6,6 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import Header from "../Header/Header";
 // import CartOverlay from "../Header/CartOverlay/CartOverlay";
 import ProductListingPage from "../ProductListingPage/ProductListingPage";
-import ProductDescriptionPage from "../ProductDescriptionPage/ProductDescriptionPage";
 import HOCProductDescriptionPage from "../ProductDescriptionPage/ProductDescriptionPage";
 
 export const client = new ApolloClient({
@@ -43,6 +42,12 @@ class App extends Component {
   selectCurrency = (currency) => {
     this.setState({ selectedCurrency: currency });
   };
+
+  // chooseCurrency = () => {
+  //   return this.props.product.prices.find(
+  //     (item) => item.currency.symbol === this.props.currency
+  //   );
+  // };
 
   getProduct = (id) => {
     client
@@ -117,6 +122,7 @@ class App extends Component {
                   element={
                     <HOCProductDescriptionPage
                       product={this.state.selectedProduct}
+                      currency={this.state.selectedCurrency}
                     />
                   }
                 />
