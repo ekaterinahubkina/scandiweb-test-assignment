@@ -17,11 +17,13 @@
     grid-area: gallery;
     display: flex;
     flex-direction: column;
+    gap: 40px;
 }
 
 .product-description__gallery-img {
     width: 79px;
     height: 80px;
+    object-fit: contain;
 }
 
 .product-description__selected-img {
@@ -69,6 +71,7 @@
     font-size: 16px;
     line-height: 120%;
     color: #fff;
+    cursor: pointer;
 }
 
 .product-description__description {

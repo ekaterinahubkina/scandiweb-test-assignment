@@ -21,52 +21,52 @@ class CurrenciesDropdown extends Component {
 
   closeDropdown = () => {
     this.setState({ isDropdownOpen: false });
-  }
+  };
 
   render() {
     return (
       <>
-      <div className="currencies-dropdown">
-        <div className="currencies-dropdown__container">
-          <h3
-            className="currencies-dropdown__selected-currency"
-            onClick={this.handleCurrenciesBtnClick}
-          >
-            {this.state.selectedCurrency}
-          </h3>
-        </div>
-
-        <div
-          className={`currencies-dropdown__options ${
-            this.state.isDropdownOpen && "currencies-dropdown__options_opened"
-          }`}
-        >
-          {this.props.currencies.map((currency) => (
-            <label
-              key={currency.label}
-              className="currencies-dropdown__option"
-              // {`attributes__value attributes__value_type_text ${
-              //   this.state.activeAttribute === item.displayValue &&
-              //   "attributes__value_type_text_active"
-              // }`}
-              htmlFor={currency.label}
-              onClick={this.closeDropdown}
+        <div className="currencies-dropdown">
+          <div className="currencies-dropdown__container">
+            <h3
+              className="currencies-dropdown__selected-currency"
+              onClick={this.handleCurrenciesBtnClick}
             >
-              {currency.symbol + currency.label}
-              <input
-                type="radio"
-                id={currency.label}
-                name="currency"
-                value={currency.symbol}
-                onChange={this.handleChange}
-              ></input>
-            </label>
-          ))}
+              {this.state.selectedCurrency}
+            </h3>
+          </div>
+
+          <div
+            className={`currencies-dropdown__options ${
+              this.state.isDropdownOpen && "currencies-dropdown__options_opened"
+            }`}
+          >
+            {this.props.currencies.map((currency) => (
+              <label
+                key={currency.label}
+                className="currencies-dropdown__option"
+                htmlFor={currency.label}
+                onClick={this.closeDropdown}
+              >
+                {currency.symbol + currency.label}
+                <input
+                  type="radio"
+                  id={currency.label}
+                  name="currency"
+                  value={currency.symbol}
+                  onChange={this.handleChange}
+                ></input>
+              </label>
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="currencies-dropdown__overlay" onClick={this.closeDropdown}></div>
+        <div
+          className={`currencies-dropdown__overlay ${
+            this.state.isDropdownOpen && "currencies-dropdown__overlay_opened"
+          }`}
+          onClick={this.closeDropdown}
+        ></div>
       </>
-      
     );
   }
 }

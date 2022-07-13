@@ -8,6 +8,7 @@ class Attributes extends Component {
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
     this.handleSwatchAttributeChange =
       this.handleSwatchAttributeChange.bind(this);
+      this.displayTextValues = this.displayTextValues.bind(this);
   }
 
   handleAttributeChange(e) {
@@ -16,6 +17,21 @@ class Attributes extends Component {
 
   handleSwatchAttributeChange(e) {
     this.setState({ activeSwatchAttribute: e.target.value });
+  }
+
+  displayTextValues(value) {
+    switch (value.toLowerCase()) {
+      case "small":
+        return "S";
+      case "medium":
+        return "M";
+      case "large":
+        return "L";
+      case "extra large":
+        return "XL";
+      default:
+        return value;
+    }
   }
 
   render() {
@@ -28,6 +44,8 @@ class Attributes extends Component {
               <label
                 key={item.id}
                 className={`attributes__value attributes__value_type_swatch ${
+                  this.props.swatchClassName && this.props.swatchClassName
+                } ${
                   this.state.activeSwatchAttribute === item.displayValue &&
                   "attributes__value_type_swatch_active"
                 }`}
@@ -46,12 +64,14 @@ class Attributes extends Component {
               <label
                 key={item.id}
                 className={`attributes__value attributes__value_type_text ${
+                  this.props.textClassName && this.props.textClassName
+                } ${
                   this.state.activeAttribute === item.displayValue &&
                   "attributes__value_type_text_active"
                 }`}
                 htmlFor={`${this.props.attribute.name}_${item.displayValue}`}
               >
-                {item.displayValue}
+                {this.displayTextValues(item.displayValue)}
                 <input
                   type="radio"
                   id={`${this.props.attribute.name}_${item.displayValue}`}

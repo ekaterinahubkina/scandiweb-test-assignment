@@ -8,7 +8,7 @@ import Attributes from "./Attributes/Attributes";
 
 function withRouter(Component) {
   function ComponentWithRouter(props) {
-    let params = useParams();
+    const params = useParams();
     return <Component {...props} params={params} />;
   }
   return ComponentWithRouter;
@@ -29,9 +29,6 @@ class ProductDescriptionPage extends Component {
     this.selectImg = this.selectImg.bind(this);
   }
   componentDidMount() {
-    // this.setState({
-    //   id : this.props.params.productId
-    // })
     client
       .query({ query: getProduct, variables: { id: this.state.id } })
       .then((data) => {
@@ -47,14 +44,18 @@ class ProductDescriptionPage extends Component {
       .catch((err) => console.log(err));
   }
 
-  chooseCurrency = () => {
-    return this.state.product.prices.find(
-      (item) => item.currency.symbol === this.props.currency
-    );
-  };
+  // chooseCurrency = () => {
+  //   return this.state.product.prices.find(
+  //     (item) => item.currency.symbol === this.props.currency
+  //   );
+  // };
 
   selectImg(e) {
     this.setState({ selectedImg: e.target.src });
+  }
+
+  handleAddToCartClick = () => {
+    this.props.addToCart(this.state.product)
   }
   render() {
     return !this.state.isLoading ? (
@@ -87,18 +88,16 @@ class ProductDescriptionPage extends Component {
               <Attributes key={attribute.name} attribute={attribute}/>
             ))}
           </div>
-          {/* <Attributes attributes={this.state.product.attributes} /> */}
           <div className="product-description__price">
             Price:
             <div>
-              {this.chooseCurrency().currency.symbol}
-              {this.chooseCurrency().amount}
+              {this.props.chooseCurrency(this.state.product.prices).currency.symbol}
+              {this.props.chooseCurrency(this.state.product.prices).amount}
             </div>
           </div>
-          <button className="product-description__add-to-cart-btn">
+          <button className="product-description__add-to-cart-btn" onClick={this.handleAddToCartClick}>
             add to cart
           </button>
-          
           <div className="product-description__description" dangerouslySetInnerHTML={{ __html: this.state.product.description }}></div>
         </div>
       </section>

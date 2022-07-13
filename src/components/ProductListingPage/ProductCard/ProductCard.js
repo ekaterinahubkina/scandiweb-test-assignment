@@ -36,8 +36,8 @@ class ProductCard extends Component {
 
           <h4 className="product-card__title">{this.props.product.name}</h4>
           <p className="product-card__price">
-            {this.chooseCurrency().currency.symbol}
-            {this.chooseCurrency().amount}
+            {this.props.chooseCurrency(this.props.product.prices).currency.symbol}
+            {this.props.chooseCurrency(this.props.product.prices).amount}
           </p>
         </article>
       </Link>
