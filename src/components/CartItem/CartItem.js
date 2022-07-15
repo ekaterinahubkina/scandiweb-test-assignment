@@ -5,26 +5,45 @@ import "./CartItem.scss";
 class CartItem extends Component {
   constructor(props) {
     super(props);
-    this.state = { amount: 1 };
+    this.state = { amount: 1, price: 0 };
+  }
+  componentDidMount() {
+    this.setState({ price: this.countPrice() });
+    this.props.countTotal(this.state.amount);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.amount !== prevState.amount) {
+      this.setState({ price: this.countPrice() });
+      this.props.countTotal(this.state.amount);
+    }
   }
 
   increment = () => {
     this.setState({ amount: this.state.amount + 1 });
   };
+
   decrement = () => {
     this.setState({ amount: this.state.amount - 1 });
   };
+
   countPrice = () => {
-    const price = this.props.chooseCurrency(this.props.product.prices).amount * this.state.amount;
-    return this.props.chooseCurrency(this.props.product.prices).currency.symbol + price;
-  }
+    const price =
+      this.props.chooseCurrency(this.props.product.prices).amount *
+      this.state.amount;
+    return (
+      this.props.chooseCurrency(this.props.product.prices).currency.symbol +
+      price
+    );
+  };
+
   render() {
     return (
       <article className="cart-item">
         <div className="cart-item__info">
           <h2 className="cart-item__brand">{this.props.product.brand}</h2>
           <h3 className="cart-item__name">{this.props.product.name}</h3>
-          <p className="cart-item__price">{this.countPrice()}</p>
+          <p className="cart-item__price">{this.state.price}</p>
 
           {/* <>
             <h4 className="cart-item__title">Apollo Running Short</h4>

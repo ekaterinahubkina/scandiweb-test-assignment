@@ -22,7 +22,7 @@ class App extends Component {
       currencies: [],
       selectedCurrency: "$",
       selectedProduct: {},
-      cartItems: [],
+      cartItems: JSON.parse(localStorage.getItem('cart')) || [],
       isCartOverlayOpen: false,
     };
   }
@@ -59,6 +59,7 @@ class App extends Component {
   addToCart = (item) => {
     const newCartItems = [item, ...this.state.cartItems];
     this.setState({ cartItems: newCartItems });
+    localStorage.setItem('cart', JSON.stringify([item, ...this.state.cartItems]))
   };
 
   toggleCartOverlay = () => {

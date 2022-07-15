@@ -55,6 +55,16 @@ class ProductDescriptionPage extends Component {
   }
 
   handleAddToCartClick = () => {
+    // this.setState(({product}) => {
+    //   product.amount = 1,
+    //   ...product,
+    // });
+    this.setState({
+      product: {
+           ...this.state.product,
+           amount: 1
+      }
+  })
     this.props.addToCart(this.state.product)
   }
   render() {

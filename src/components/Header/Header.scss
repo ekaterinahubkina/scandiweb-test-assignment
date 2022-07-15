@@ -25,7 +25,7 @@
 }
 
 .header__currencies-btn_type_close {
-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 // .header__currencies-btn_type_open {
@@ -33,6 +33,7 @@ transform: rotate(180deg);
 // }
 
 .header__cart {
+    position: relative;
     width: 20px;
     height: 20px;
     margin-left: 22px;
@@ -40,3 +41,20 @@ transform: rotate(180deg);
     align-self: center;
 }
 
+.header__cart-number {
+    position: absolute;
+    right: -60%;
+    top: -35%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 60px;
+    background-color: $text-color;
+    color: #fff;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+}

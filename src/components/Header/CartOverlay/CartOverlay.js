@@ -11,15 +11,36 @@ class CartOverlay extends Component {
   static contextType = CartContext;
 
   componentDidMount() {
-    this.setState({ counter: this.context.length, total: this.countTotal() });
+    this.setState({ counter: this.context.length });
+    this.countTotal()
   }
 
-  countTotal = () => {
-    return this.context.reduce((acc, item) => {
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (this.state.total !== prevState.total) {
+  //     this.setState({ price: this.countPrice() });
+  //     this.props.countTotal(this.state.amount);
+  //   }
+  // }
+
+  // increment = () => {
+  //   this.setState({ productAmount: this.state.productAmount + 1 });
+  // };
+  // decrement = () => {
+  //   this.setState({ productAmount: this.state.productAmount - 1 });
+  // };
+  // countPrice = () => {
+  //   const price = this.props.chooseCurrency(this.props.product.prices).productAmount * this.state.productAmount;
+  //   return this.props.chooseCurrency(this.props.product.prices).currency.symbol + price;
+  // }
+
+  countTotal = (num) => {
+    
+    const total = this.context.reduce((acc, item) => {
       const currency = this.props.chooseCurrency(item.prices);
-      acc += currency.amount;
-      return acc;
+      const price = num ? currency.amount * num : currency.amount;
+      return acc + price;
     }, 0)
+    this.setState({total: total})
   }
 
   render() {
@@ -33,7 +54,7 @@ class CartOverlay extends Component {
             {this.context &&
               this.context.map((item) => (
                 <li key={item.name}>
-                  <CartItem product={item} chooseCurrency={this.props.chooseCurrency} />
+                  <CartItem product={item} chooseCurrency={this.props.chooseCurrency} countTotal={this.countTotal} />
                 </li>
               ))}
 

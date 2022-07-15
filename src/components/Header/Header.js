@@ -4,12 +4,15 @@ import Navigation from "./Navigation/Navigation";
 import logo from "../../images/logo.svg";
 import { NavLink } from "react-router-dom";
 import CurrenciesDropdown from "./CurrenciesDropdown/CurrenciesDropdown";
+import { CartContext } from "../../context/CartContext";
 
 class Header extends Component {
     constructor(props) {
       super(props);
       this.state = { isCartOpen: false };
     }
+
+    static contextType = CartContext;
 
   
 
@@ -27,7 +30,9 @@ class Header extends Component {
         </NavLink>
           <div className="header__actions">
             <CurrenciesDropdown currencies={this.props.currencies} selectCurrency={this.props.selectCurrency} />
-            <div className="header__cart" onClick={this.props.onCartIconClick}></div>
+            <div className="header__cart" onClick={this.props.onCartIconClick}>
+              {this.context.length > 0 && <div className="header__cart-number">{this.context.length}</div>}
+            </div>
             
           </div>
           {/* {this.state.isCartOpen && <CartOverlay />} */}
