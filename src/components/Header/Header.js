@@ -21,7 +21,7 @@ class Header extends Component {
   }
 
   render() {
-    console.log(this.props)
+    console.log('render Header')
     return (
       <header className="header">
         <Navigation categories={this.props.categories} />

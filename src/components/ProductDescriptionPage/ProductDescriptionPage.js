@@ -23,6 +23,7 @@ class ProductDescriptionPage extends Component {
     this.state = {
       selectedImg: "",
       product: {},
+      selectedAttributes: {},
       id: this.props.params.productId,
       isLoading: true,
     };
@@ -54,18 +55,28 @@ class ProductDescriptionPage extends Component {
     this.setState({ selectedImg: e.target.src });
   }
 
+  selectAttributes = (name, value) => {
+    const attributes = {
+      ...this.state.selectedAttributes,
+    [name]: value
+    }
+    this.setState({selectedAttributes: attributes})
+
+  }
+
   handleAddToCartClick = () => {
-    // this.setState(({product}) => {
-    //   product.amount = 1,
-    //   ...product,
-    // });
+    //const price = this.props.chooseCurrency(this.state.product.prices).amount;
+    const product = {
+      ...this.state.product,
+      amount: 1,
+      // price: price,
+      selectedAttributes: this.state.selectedAttributes
+    }
     this.setState({
-      product: {
-           ...this.state.product,
-           amount: 1
-      }
+      product: product
   })
-    this.props.addToCart(this.state.product)
+    this.props.addToCart(product)
+    // debugger
   }
   render() {
     return !this.state.isLoading ? (
@@ -95,7 +106,7 @@ class ProductDescriptionPage extends Component {
           </h3>
           <div className="attributes">
             {this.state.product.attributes.map((attribute) => (
-              <Attributes key={attribute.name} attribute={attribute}/>
+              <Attributes key={attribute.name} attribute={attribute} selectAttributes={this.selectAttributes}/>
             ))}
           </div>
           <div className="product-description__price">

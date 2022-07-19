@@ -22,7 +22,7 @@ class App extends Component {
       currencies: [],
       selectedCurrency: "$",
       selectedProduct: {},
-      cartItems: JSON.parse(localStorage.getItem('cart')) || [],
+      cartItems: JSON.parse(localStorage.getItem("cart")) || [],
       isCartOverlayOpen: false,
     };
   }
@@ -59,11 +59,51 @@ class App extends Component {
   addToCart = (item) => {
     const newCartItems = [item, ...this.state.cartItems];
     this.setState({ cartItems: newCartItems });
-    localStorage.setItem('cart', JSON.stringify([item, ...this.state.cartItems]))
+    localStorage.setItem(
+      "cart",
+      JSON.stringify([item, ...this.state.cartItems])
+    );
   };
 
   toggleCartOverlay = () => {
     this.setState({ isCartOverlayOpen: !this.state.isCartOverlayOpen });
+  };
+
+  // handleUpdateAmount = (item, amount) => {
+  //   const newArr = this.state.cartItems.map((product) =>
+  //     product.name === item.name ? { ...product, amount: amount } : product
+  //   );
+  //   // const product = this.state.cartItems.find((product) => product.name === item.name);
+  //   // product.amount = amount;
+  //   // const newCartItems = [product, ...this.state.cartItems]
+  //   this.setState({ cartItems: newArr });
+  //   localStorage.setItem("cart", JSON.stringify(newArr));
+  // };
+
+  increment = (name) => {
+    const newArr = this.state.cartItems.map((product) =>
+      product.name === name
+        ? { ...product, amount: product.amount + 1 }
+        : product
+    );
+    // const product = this.state.cartItems.find(el => el.name === name);
+    // product.amount = product.amount + 1;
+    // product.price = product.price * product.amount;
+
+    this.setState({ cartItems: newArr });
+    localStorage.setItem("cart", JSON.stringify(newArr));
+  };
+  decrement = (name) => {
+    const newArr = this.state.cartItems.map((product) =>
+      product.name === name
+        ? { ...product, amount: product.amount - 1 }
+        : product
+    );
+    // const product = this.state.cartItems.find(el => el.name === name);
+    // product.amount = product.amount - 1;
+    // product.price = product.price * product.amount;
+    this.setState({ cartItems: newArr });
+    localStorage.setItem("cart", JSON.stringify(newArr));
   };
 
   render() {
@@ -83,6 +123,9 @@ class App extends Component {
                   <CartOverlay
                     currency={this.state.selectedCurrency}
                     chooseCurrency={this.chooseCurrency}
+                    updateAmount={this.handleUpdateAmount}
+                    increment={this.increment}
+                    decrement={this.decrement}
                   />
                 )}
 

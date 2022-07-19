@@ -5,32 +5,41 @@ import "./CartItem.scss";
 class CartItem extends Component {
   constructor(props) {
     super(props);
-    this.state = { amount: 1, price: 0 };
+    this.state = { amount: this.props.product.amount, price: 0 };
   }
   componentDidMount() {
     this.setState({ price: this.countPrice() });
-    this.props.countTotal(this.state.amount);
+    //this.props.countTotal();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.amount !== prevState.amount) {
+    if (this.props.product !== prevProps.product) {
       this.setState({ price: this.countPrice() });
-      this.props.countTotal(this.state.amount);
+      this.props.countTotal();
+      // this.props.updateAmount(this.props.product, this.state.amount);
+     // debugger
+
     }
   }
 
   increment = () => {
-    this.setState({ amount: this.state.amount + 1 });
+    this.props.increment(this.props.product.name)
+    //this.setState({ amount: this.state.amount + 1 });
+    // this.props.updateAmount(this.props.product, this.state.amount);
+    // debugger
   };
 
   decrement = () => {
-    this.setState({ amount: this.state.amount - 1 });
+    //this.setState({ amount: this.state.amount - 1 });
+    this.props.decrement(this.props.product.name)
   };
+
+  
 
   countPrice = () => {
     const price =
       this.props.chooseCurrency(this.props.product.prices).amount *
-      this.state.amount;
+      this.props.product.amount;
     return (
       this.props.chooseCurrency(this.props.product.prices).currency.symbol +
       price
@@ -91,11 +100,11 @@ class CartItem extends Component {
             className="cart-item__btn cart-item__btn_type_plus"
             onClick={this.increment}
           ></button>
-          <span className="cart-item__number">{this.state.amount}</span>
+          <span className="cart-item__number">{this.props.product.amount}</span>
           <button
             className="cart-item__btn cart-item__btn_type_minus"
             onClick={this.decrement}
-            disabled={this.state.amount === 1}
+            //disabled={this.state.amount === 1}
           ></button>
         </div>
         <img

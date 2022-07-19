@@ -13,6 +13,7 @@ class Attributes extends Component {
 
   handleAttributeChange(e) {
     this.setState({ activeAttribute: e.target.value });
+    this.props.selectAttributes(this.props.attribute.name, e.target.value)
   }
 
   handleSwatchAttributeChange(e) {
