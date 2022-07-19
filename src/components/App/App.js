@@ -8,6 +8,7 @@ import { CartContext } from "../../context/CartContext";
 import ProductListingPage from "../ProductListingPage/ProductListingPage";
 import HOCProductDescriptionPage from "../ProductDescriptionPage/ProductDescriptionPage";
 import CartOverlay from "../Header/CartOverlay/CartOverlay";
+import Cart from "../Cart/Cart";
 
 export const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
@@ -183,7 +184,8 @@ class App extends Component {
                         addToCart={this.addToCart}
                       />
                     }
-                  />
+                  ></Route>
+                  <Route path="/cart" element={<Cart/>}></Route>
                 </Routes>
               </>
             )}

@@ -17,13 +17,12 @@ class CartItem extends Component {
       this.setState({ price: this.countPrice() });
       this.props.countTotal();
       // this.props.updateAmount(this.props.product, this.state.amount);
-     // debugger
-
+      // debugger
     }
   }
 
   increment = () => {
-    this.props.increment(this.props.product.name)
+    this.props.increment(this.props.product.name);
     //this.setState({ amount: this.state.amount + 1 });
     // this.props.updateAmount(this.props.product, this.state.amount);
     // debugger
@@ -31,10 +30,8 @@ class CartItem extends Component {
 
   decrement = () => {
     //this.setState({ amount: this.state.amount - 1 });
-    this.props.decrement(this.props.product.name)
+    this.props.decrement(this.props.product.name);
   };
-
-  
 
   countPrice = () => {
     const price =
@@ -53,12 +50,6 @@ class CartItem extends Component {
           <h2 className="cart-item__brand">{this.props.product.brand}</h2>
           <h3 className="cart-item__name">{this.props.product.name}</h3>
           <p className="cart-item__price">{this.state.price}</p>
-
-          {/* <>
-            <h4 className="cart-item__title">Apollo Running Short</h4>
-            <p className="cart-item__price">$50</p>
-          </> */}
-
           <div className="cart-item__attributes">
             {this.props.product.attributes.map((attribute) => (
               <Attributes

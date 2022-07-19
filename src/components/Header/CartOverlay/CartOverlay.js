@@ -22,66 +22,14 @@ class CartOverlay extends Component {
   //   }
   // }
 
-  // increment = (item) => {
-  //   const product = this.context.find(el => el.name === item.name);
-  //   product.amount = product.amount + 1;
-  //   this.props.updateAmount(product, product.amount)
-  // };
-  // decrement = (item) => {
-  //   const product = this.context.find(el => el.name === item.name);
-  //   product.amount = product.amount + 1;
-  //   this.props.updateAmount(product, product.amount)
-  // };
-  // countPrice = () => {
-  //   const price = this.props.chooseCurrency(this.props.product.prices).productAmount * this.state.productAmount;
-  //   return this.props.chooseCurrency(this.props.product.prices).currency.symbol + price;
-  // }
-
-  // countTotal = () => {
-  //   return this.context.reduce((acc, item) => {
-  //     const currency = this.props.chooseCurrency(item.prices);
-  //     const price = currency.amount * item.amount;
-  //    // debugger;
-  //     return (acc += price);
-      
-  //   }, 0);
-    
-  // };
-
   countTotal = () => {
-    
     const total = this.context.reduce((acc, item) => {
       const currency = this.props.chooseCurrency(item.prices);
-      const price = currency.amount *item.amount;
+      const price = currency.amount * item.amount;
       return acc + price;
-    }, 0)
-    this.setState({total: total})
-  }
-
-  // total = () => {
-  //   this.setState({ total: this.countTotal() });
-  // };
-
-//   countPrice = (price) => {
-// const price  = 
-//   }
-
-// const events = {
-//   increment: item => {
-//     let index = items.indexOf(item);
-//     item.count = item.count + 1;
-//     products[index] = item;
-
-//     setItems([...products]);
-//   },
-//   decrement: item => {
-//     let index = items.indexOf(item);
-//     item.count = item.count - 1;
-//     products[index] = item;
-
-//     setItems([...products]);
-//   }
-// };
+    }, 0);
+    this.setState({ total: total });
+  };
 
   render() {
     return (
@@ -94,9 +42,9 @@ class CartOverlay extends Component {
             {this.context &&
               this.context.map((item) => (
                 <li key={item.name}>
-                  <CartItem 
-                  increment={this.props.increment}
-                  decrement={this.props.decrement}
+                  <CartItem
+                    increment={this.props.increment}
+                    decrement={this.props.decrement}
                     product={item}
                     chooseCurrency={this.props.chooseCurrency}
                     countTotal={this.countTotal}
@@ -104,9 +52,6 @@ class CartOverlay extends Component {
                   />
                 </li>
               ))}
-
-            {/* <li><CartItem /></li>
-            <li><CartItem /></li> */}
           </ul>
           <div className="cart__total">
             Total: <span>{this.props.currency + this.state.total}</span>
