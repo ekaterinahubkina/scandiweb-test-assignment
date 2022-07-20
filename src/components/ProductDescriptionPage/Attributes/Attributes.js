@@ -18,6 +18,11 @@ class Attributes extends Component {
 
   handleSwatchAttributeChange(e) {
     this.setState({ activeSwatchAttribute: e.target.value });
+    let value = e.target.closest('label').style.backgroundColor;
+    value = value[0].toUpperCase() + value.substring(1);
+    this.props.selectAttributes(this.props.attribute.name, value)
+    //debugger
+
   }
 
   displayTextValues(value) {

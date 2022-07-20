@@ -23,7 +23,7 @@ class ProductDescriptionPage extends Component {
     this.state = {
       selectedImg: "",
       product: {},
-      selectedAttributes: {},
+      selectedAttributes: [],
       id: this.props.params.productId,
       isLoading: true,
     };
@@ -56,10 +56,12 @@ class ProductDescriptionPage extends Component {
   }
 
   selectAttributes = (name, value) => {
-    const attributes = {
-      ...this.state.selectedAttributes,
+    const attribute = {
+     // ...this.state.selectedAttributes,
     [name]: value
     }
+    const attributes = [...this.state.selectedAttributes];
+    attributes.push(attribute)
     this.setState({selectedAttributes: attributes})
 
   }

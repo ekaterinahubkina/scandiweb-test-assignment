@@ -1,5 +1,6 @@
-$background-white: #fff;
+$color-white: #fff;
 $text-color: #1D1F22;
+$color-green: #5ECE7B;
 
 @mixin section-width {
   width: calc(100% - 2* 101px);

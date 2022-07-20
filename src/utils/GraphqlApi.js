@@ -27,6 +27,7 @@ export const getProducts = gql`
 export const getProduct = gql`
   query Query($id: String!) {
     product(id: $id) {
+      id
       name
       brand
       gallery

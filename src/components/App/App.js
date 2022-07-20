@@ -60,10 +60,14 @@ class App extends Component {
   addToCart = (item) => {
     const newCartItems = [item, ...this.state.cartItems];
     this.setState({ cartItems: newCartItems });
-    localStorage.setItem(
-      "cart",
-      JSON.stringify([item, ...this.state.cartItems])
-    );
+    localStorage.setItem("cart", JSON.stringify(newCartItems));
+  };
+
+  deleteFromCart = (item) => {
+    const newCartItems = this.state.cartItems.filter((el) => el.id !== item.id);
+    this.setState({ cartItems: newCartItems });
+    //debugger
+    localStorage.setItem("cart", JSON.stringify(newCartItems));
   };
 
   toggleCartOverlay = () => {
@@ -87,22 +91,16 @@ class App extends Component {
         ? { ...product, amount: product.amount + 1 }
         : product
     );
-    // const product = this.state.cartItems.find(el => el.name === name);
-    // product.amount = product.amount + 1;
-    // product.price = product.price * product.amount;
-
     this.setState({ cartItems: newArr });
     localStorage.setItem("cart", JSON.stringify(newArr));
   };
+
   decrement = (name) => {
     const newArr = this.state.cartItems.map((product) =>
       product.name === name
         ? { ...product, amount: product.amount - 1 }
         : product
     );
-    // const product = this.state.cartItems.find(el => el.name === name);
-    // product.amount = product.amount - 1;
-    // product.price = product.price * product.amount;
     this.setState({ cartItems: newArr });
     localStorage.setItem("cart", JSON.stringify(newArr));
   };
@@ -124,7 +122,7 @@ class App extends Component {
                   <CartOverlay
                     currency={this.state.selectedCurrency}
                     chooseCurrency={this.chooseCurrency}
-                    updateAmount={this.handleUpdateAmount}
+                    //updateAmount={this.handleUpdateAmount}
                     increment={this.increment}
                     decrement={this.decrement}
                   />
@@ -185,7 +183,18 @@ class App extends Component {
                       />
                     }
                   ></Route>
-                  <Route path="/cart" element={<Cart/>}></Route>
+                  <Route
+                    path="/cart"
+                    element={
+                      <Cart
+                        chooseCurrency={this.chooseCurrency}
+                        //updateAmount={this.handleUpdateAmount}
+                        increment={this.increment}
+                        decrement={this.decrement}
+                        deleteFromCart={this.deleteFromCart}
+                      />
+                    }
+                  ></Route>
                 </Routes>
               </>
             )}

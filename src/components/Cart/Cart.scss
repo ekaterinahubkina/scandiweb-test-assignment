@@ -1,0 +1,36 @@
+@import '../../index.scss';
+
+.cart {
+    @include section-width;
+
+}
+.cart__products-list {
+    list-style: none;
+}
+
+.cart__total {
+    display: flex;
+    flex-direction: column;
+    margin: 32px 0 16px;
+
+    & p {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 28px;
+        margin: 0 0 8px;
+    }
+}
+
+.cart__order-button {
+    background-color: $color-green;
+    color: $color-white;
+    text-transform: uppercase;
+    width: 279px;
+    height: 43px;
+    border: none;
+    cursor: pointer;
+    transition: all .5s ease-in-out;
+    &:hover {
+        opacity: .7;
+    }
+}
