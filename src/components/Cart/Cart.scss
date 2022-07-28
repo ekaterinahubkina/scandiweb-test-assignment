@@ -2,8 +2,18 @@
 
 .cart {
     @include section-width;
-
+    padding-top: 80px;
 }
+
+.cart__title {
+    margin-bottom: 55px;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+    text-transform: uppercase;
+    color: $text-color;
+}
+
 .cart__products-list {
     list-style: none;
 }
@@ -30,6 +40,7 @@
     border: none;
     cursor: pointer;
     transition: all .5s ease-in-out;
+
     &:hover {
         opacity: .7;
     }

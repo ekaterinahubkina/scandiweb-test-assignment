@@ -16,9 +16,7 @@ function withRouter(Component) {
 
 class ProductDescriptionPage extends Component {
   constructor(props) {
-    // debugger;
     super(props);
-    // this.location = this.props.location;
 
     this.state = {
       selectedImg: "",
@@ -56,15 +54,21 @@ class ProductDescriptionPage extends Component {
   }
 
   selectAttributes = (name, value) => {
-    const attribute = {
-     // ...this.state.selectedAttributes,
-    [name]: value
-    }
     const attributes = [...this.state.selectedAttributes];
-    attributes.push(attribute)
-    this.setState({selectedAttributes: attributes})
-
-  }
+    if (attributes.some((attribute) => attribute.hasOwnProperty(name))) {
+      const oldAttribute = attributes.find((attribute) =>
+        attribute.hasOwnProperty(name)
+      );
+      oldAttribute[name] = value;
+      console.log(oldAttribute);
+    } else {
+      const attribute = {
+        [name]: value,
+      };
+      attributes.push(attribute);
+    }
+    this.setState({ selectedAttributes: attributes });
+  };
 
   handleAddToCartClick = () => {
     //const price = this.props.chooseCurrency(this.state.product.prices).amount;
@@ -72,14 +76,15 @@ class ProductDescriptionPage extends Component {
       ...this.state.product,
       amount: 1,
       // price: price,
-      selectedAttributes: this.state.selectedAttributes
-    }
-    this.setState({
-      product: product
-  })
-    this.props.addToCart(product)
+      selectedAttributes: this.state.selectedAttributes,
+    };
+    //   this.setState({
+    //     product: product
+    // })
+    this.props.compare(product);
+    this.props.addToCart(product);
     // debugger
-  }
+  };
   render() {
     return !this.state.isLoading ? (
       <section className="product-description">
@@ -108,20 +113,33 @@ class ProductDescriptionPage extends Component {
           </h3>
           <div className="attributes">
             {this.state.product.attributes.map((attribute) => (
-              <Attributes key={attribute.name} attribute={attribute} selectAttributes={this.selectAttributes}/>
+              <Attributes
+                key={attribute.name}
+                attribute={attribute}
+                selectAttributes={this.selectAttributes}
+              />
             ))}
           </div>
           <div className="product-description__price">
             Price:
             <div>
-              {this.props.chooseCurrency(this.state.product.prices).currency.symbol}
+              {
+                this.props.chooseCurrency(this.state.product.prices).currency
+                  .symbol
+              }
               {this.props.chooseCurrency(this.state.product.prices).amount}
             </div>
           </div>
-          <button className="product-description__add-to-cart-btn" onClick={this.handleAddToCartClick}>
+          <button
+            className="product-description__add-to-cart-btn"
+            onClick={this.handleAddToCartClick}
+          >
             add to cart
           </button>
-          <div className="product-description__description" dangerouslySetInnerHTML={{ __html: this.state.product.description }}></div>
+          <div
+            className="product-description__description"
+            dangerouslySetInnerHTML={{ __html: this.state.product.description }}
+          ></div>
         </div>
       </section>
     ) : (

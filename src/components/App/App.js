@@ -7,8 +7,8 @@ import Header from "../Header/Header";
 import { CartContext } from "../../context/CartContext";
 import ProductListingPage from "../ProductListingPage/ProductListingPage";
 import HOCProductDescriptionPage from "../ProductDescriptionPage/ProductDescriptionPage";
-import CartOverlay from "../Header/CartOverlay/CartOverlay";
-import Cart from "../Cart/Cart";
+import CartWithFunctionality from "../Cart/Cart";
+import CartOverlayWithFunctionality from "../Cart/CartOverlay/CartOverlay";
 
 export const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
@@ -21,7 +21,7 @@ class App extends Component {
     this.state = {
       categories: [],
       currencies: [],
-      selectedCurrency: "$",
+      selectedCurrency: "",
       selectedProduct: {},
       cartItems: JSON.parse(localStorage.getItem("cart")) || [],
       isCartOverlayOpen: false,
@@ -33,18 +33,26 @@ class App extends Component {
       .query({ query: getProducts })
       .then((data) => {
         console.log(data);
-        this.setState(() => {
-          return {
-            categories: data.data.categories,
-            currencies: data.data.currencies,
-          };
+        this.setState({
+          categories: data.data.categories,
+          currencies: data.data.currencies,
+          selectedCurrency:
+            JSON.parse(localStorage.getItem("selectedCurrency")) ||
+            data.data.currencies[0].symbol,
         });
+        // this.setState(() => {
+        //   return {
+        //     categories: data.data.categories,
+        //     currencies: data.data.currencies,
+        //   };
+        // });
       })
       .catch((err) => console.log(err));
   }
 
   selectCurrency = (currency) => {
     this.setState({ selectedCurrency: currency });
+    localStorage.setItem("selectedCurrency", JSON.stringify(currency));
   };
 
   chooseCurrency = (arr) => {
@@ -57,10 +65,45 @@ class App extends Component {
     this.setState({ selectedProduct: { ...card } });
   };
 
+  compare = (item) => {
+    let res;
+    if (this.state.cartItems.some((product) => product.name === item.name)) {
+      const compared = this.state.cartItems.find(
+        (product) => product.name === item.name
+      );
+      const newAttributesFiltered = item.selectedAttributes.sort((a, b) => {
+        if (Object.keys(a)[0] > Object.keys(b)[0]) return 1;
+        return -1;
+      });
+      console.log(newAttributesFiltered);
+      const oldAttributesFiltered = compared.selectedAttributes.sort((a, b) => {
+        if (Object.keys(a)[0] > Object.keys(b)[0]) return 1;
+        return -1;
+      });
+      console.log(oldAttributesFiltered);
+      const first = JSON.stringify(oldAttributesFiltered);
+      const second = JSON.stringify(newAttributesFiltered);
+
+      console.log(first);
+      console.log(second);
+      first === second ? (res = true) : (res = false);
+    }
+    console.log(res);
+    return res;
+  };
+
   addToCart = (item) => {
-    const newCartItems = [item, ...this.state.cartItems];
-    this.setState({ cartItems: newCartItems });
-    localStorage.setItem("cart", JSON.stringify(newCartItems));
+    if (this.compare(item)) {
+      const compared = this.state.cartItems.find(
+        (product) => product.name === item.name
+      );
+      compared.amount++;
+    } else {
+      const newCartItems = [item, ...this.state.cartItems];
+      this.setState({ cartItems: newCartItems });
+      localStorage.setItem("cart", JSON.stringify(newCartItems));
+    }
+    ///need to be tested & fixed!!!
   };
 
   deleteFromCart = (item) => {
@@ -73,17 +116,6 @@ class App extends Component {
   toggleCartOverlay = () => {
     this.setState({ isCartOverlayOpen: !this.state.isCartOverlayOpen });
   };
-
-  // handleUpdateAmount = (item, amount) => {
-  //   const newArr = this.state.cartItems.map((product) =>
-  //     product.name === item.name ? { ...product, amount: amount } : product
-  //   );
-  //   // const product = this.state.cartItems.find((product) => product.name === item.name);
-  //   // product.amount = amount;
-  //   // const newCartItems = [product, ...this.state.cartItems]
-  //   this.setState({ cartItems: newArr });
-  //   localStorage.setItem("cart", JSON.stringify(newArr));
-  // };
 
   increment = (name) => {
     const newArr = this.state.cartItems.map((product) =>
@@ -106,6 +138,7 @@ class App extends Component {
   };
 
   render() {
+    console.log("render APP");
     return (
       <ApolloProvider client={client}>
         <CartContext.Provider value={this.state.cartItems}>
@@ -115,16 +148,18 @@ class App extends Component {
                 <Header
                   categories={this.state.categories}
                   currencies={this.state.currencies}
+                  currency={this.state.selectedCurrency}
                   selectCurrency={this.selectCurrency}
                   onCartIconClick={this.toggleCartOverlay}
                 />
                 {this.state.isCartOverlayOpen && (
-                  <CartOverlay
+                  <CartOverlayWithFunctionality
                     currency={this.state.selectedCurrency}
                     chooseCurrency={this.chooseCurrency}
-                    //updateAmount={this.handleUpdateAmount}
                     increment={this.increment}
                     decrement={this.decrement}
+                    deleteFromCart={this.deleteFromCart}
+                    close={this.toggleCartOverlay}
                   />
                 )}
 
@@ -180,15 +215,16 @@ class App extends Component {
                         currency={this.state.selectedCurrency}
                         chooseCurrency={this.chooseCurrency}
                         addToCart={this.addToCart}
+                        compare={this.compare}
                       />
                     }
                   ></Route>
                   <Route
                     path="/cart"
                     element={
-                      <Cart
+                      <CartWithFunctionality
                         chooseCurrency={this.chooseCurrency}
-                        //updateAmount={this.handleUpdateAmount}
+                        currency={this.state.selectedCurrency}
                         increment={this.increment}
                         decrement={this.decrement}
                         deleteFromCart={this.deleteFromCart}

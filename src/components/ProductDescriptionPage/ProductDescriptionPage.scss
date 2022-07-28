@@ -24,11 +24,13 @@
     width: 79px;
     height: 80px;
     object-fit: contain;
+    cursor: pointer;
 }
 
 .product-description__selected-img {
     grid-area: img;
-    max-width: 610px;
+    max-width: 611px;
+    margin: 0 100px 0 40px;
     max-height: 511px;
 }
 

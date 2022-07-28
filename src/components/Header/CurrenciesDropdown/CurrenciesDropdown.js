@@ -6,8 +6,12 @@ class CurrenciesDropdown extends Component {
     super(props);
     this.state = {
       isDropdownOpen: false,
-      selectedCurrency: this.props.currencies[0].symbol,
+      selectedCurrency: '',
     };
+  }
+
+  componentDidMount() {
+    this.setState({selectedCurrency: this.props.currency})
   }
 
   handleChange = (event) => {

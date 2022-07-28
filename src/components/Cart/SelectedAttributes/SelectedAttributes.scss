@@ -1,0 +1,71 @@
+@import '../../../index.scss';
+
+.cart__attribute-name {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 18px;
+    margin: 0 0 7px;
+}
+
+.cart-overlay__attribute-name {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    margin: 0 0 8px;
+}
+
+.cart__attribute-items,
+.cart-overlay__attribute-items {
+    display: flex;
+    gap: 8px;
+    margin: 0 0 20px;
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+.cart-overlay__attribute-items {
+    margin-bottom: 8px;
+}
+
+.cart__attribute-swatch {
+    width: 32px;
+    height: 32px;
+}
+
+.cart-overlay__attribute-swatch {
+    width: 16px;
+    height: 16px;
+}
+
+.cart__attribute-text,
+.cart-overlay__attribute-text {
+    width: 63px;
+    height: 45px;
+    border: 1px solid $text-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.cart-overlay__attribute-text {
+   width: 28px;
+  // width: fit-content;
+    height: 28px;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 160%;
+}
+
+.cart__attribute-text_active,
+.cart-overlay__attribute-text_active {
+    background-color: $text-color;
+    color: $color-white;
+}
+
+.cart__attribute-swatch_active,
+.cart-overlay__attribute-swatch_active {
+    padding: 2px;
+    border: 2px solid $color-green;
+}
